@@ -1,12 +1,10 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework.viewsets import ModelViewSet
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView, TokenRefreshView,
-)
 
 from api.v1.views import (
-    CategoryViewSet, GoodViewSet, ShoppingCartViewSet, SubcategoryViewSet,
+    CategoryViewSet, CustomTokenObtainPairView, CustomTokenRefreshView,
+    GoodViewSet, ShoppingCartViewSet, SubcategoryViewSet,
 )
 
 router = DefaultRouter()
@@ -19,8 +17,8 @@ ROUTER_DATA: list[dict[str, ModelViewSet]] = [
 ]
 
 urlpatterns_token = [
-    path('create/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('create/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 for route in ROUTER_DATA:

@@ -1,9 +1,18 @@
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView, TokenRefreshView,
+)
 
+from api.v1.schemas import (
+    CATEGORIES_VIEW_SCHEMA, GOODS_VIEW_SCHEMA,
+    SHOPPING_CART_SCHEMA, SUBCATEGORIES_VIEW_SCHEMA,
+    TOKEN_JWT_OBTAIN_SCHEMA, TOKEN_JWT_REFRESH_SCHEMA,
+)
 from api.v1.serializers import (
     CategoryGetSerializer, GoodGetSerializer,
     ShoppingCartGetSerializer, ShoppingCartPostListSerializer,
@@ -12,6 +21,19 @@ from api.v1.serializers import (
 from goods.models import Category, Good, ShoppingCart, Subcategory
 
 
+@extend_schema(**TOKEN_JWT_OBTAIN_SCHEMA)
+class CustomTokenObtainPairView(TokenObtainPairView):
+    """Используется для обновления swagger к эндпоинту получения токенов."""
+    pass
+
+
+@extend_schema(**TOKEN_JWT_REFRESH_SCHEMA)
+class CustomTokenRefreshView(TokenRefreshView):
+    """Используется для обновления swagger к эндпоинту обновления токена."""
+    pass
+
+
+@extend_schema_view(**CATEGORIES_VIEW_SCHEMA)
 class CategoryViewSet(ModelViewSet):
     """Вью-сет для взаимодействия с моделью Category."""
 
@@ -20,6 +42,7 @@ class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
 
 
+@extend_schema_view(**GOODS_VIEW_SCHEMA)
 class GoodViewSet(ModelViewSet):
     """Вью-сет для взаимодействия с моделью Good."""
 
@@ -28,6 +51,7 @@ class GoodViewSet(ModelViewSet):
     queryset = Good.objects.all().select_related('subcategory')
 
 
+@extend_schema_view(**SHOPPING_CART_SCHEMA)
 class ShoppingCartViewSet(ModelViewSet):
     """Вью-сет для взаимодействия с моделью ShoppingCart."""
 
@@ -48,6 +72,7 @@ class ShoppingCartViewSet(ModelViewSet):
             return ShoppingCartGetSerializer
         return ShoppingCartPostListSerializer
 
+    @extend_schema(exclude=True,)
     def retrieve(self, request, *args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -93,6 +118,7 @@ class ShoppingCartViewSet(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@extend_schema_view(**SUBCATEGORIES_VIEW_SCHEMA)
 class SubcategoryViewSet(ModelViewSet):
     """Вью-сет для взаимодействия с моделью Subcategory."""
 
