@@ -1,3 +1,4 @@
+from datetime import timedelta
 import os
 from pathlib import Path
 
@@ -92,7 +93,7 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "0.0.1",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,
-    "SCHEMA_PATH_PREFIX": r'/api/',
+    "SCHEMA_PATH_PREFIX": r'/api/v1/',
 }
 
 ROOT_URLCONF = 'backend.urls'
@@ -229,5 +230,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
 
 SECRET_KEY = os.getenv('SECRET_KEY')
