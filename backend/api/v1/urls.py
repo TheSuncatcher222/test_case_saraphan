@@ -2,12 +2,15 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework.viewsets import ModelViewSet
 
-from api.v1.views import CategoryViewSet, SubcategoryViewSet
+from api.v1.views import (
+    CategoryViewSet, GoodViewSet, SubcategoryViewSet,
+)
 
 router = DefaultRouter()
 
 ROUTER_DATA: list[dict[str, ModelViewSet]] = [
     {'prefix': 'categories', 'viewset': CategoryViewSet},
+    {'prefix': 'goods', 'viewset': GoodViewSet},
     {'prefix': 'subcategories', 'viewset': SubcategoryViewSet},
 ]
 

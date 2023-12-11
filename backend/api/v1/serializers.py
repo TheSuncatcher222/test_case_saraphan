@@ -30,3 +30,22 @@ class SubcategoryGetSerializer(ModelSerializer):
             'category',
             'image',
         )
+
+
+class GoodGetSerializer(ModelSerializer):
+    """Сериализатор представления объектов Good."""
+
+    subcategory = SubcategoryGetSerializer()
+
+    class Meta:
+        model = Good
+        fields = (
+            'id',
+            'name',
+            'slug',
+            'price',
+            'subcategory',
+            'image_large',
+            'image_medium',
+            'image_small',
+        )
