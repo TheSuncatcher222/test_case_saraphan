@@ -68,8 +68,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third party
+    'drf_spectacular',
     'rest_framework',
     # Local
+    'api',
+    'goods',
 ]
 
 REST_FRAMEWORK = {
@@ -95,6 +98,49 @@ SPECTACULAR_SETTINGS = {
 ROOT_URLCONF = 'backend.urls'
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+
+
+"""Models settings."""
+
+
+ADMIN_ITEMS_PER_PAGE = 15
+
+CATEGORY_IMAGE_PATH: str = 'categories/'
+CATEGORY_NAME_MAX_LEN: int = 30
+CATEGORY_SLUG_MAX_LEN: int = 30
+
+GOOD_IMAGE_PATH: str = 'goods/'
+
+SHOPPING_CART_MIN_AMOUNT: int = 1
+
+SUBCATEGORY_IMAGE_PATH: str = 'subcategories/'
+SUBCATEGORY_NAME_MAX_LEN: int = 30
+SUBCATEGORY_SLUG_MAX_LEN: int = 30
+
+
+def set_category_image_name(instance, filename) -> str:
+    """Формирует название имени файла изображения для Category."""
+    return f'{CATEGORY_IMAGE_PATH}{instance.slug}'
+
+
+def set_good_image_l_name(instance, filename) -> str:
+    """Формирует название имени файла изображения (L) для Good."""
+    return f'{GOOD_IMAGE_PATH}{instance.slug}_l'
+
+
+def set_good_image_m_name(instance, filename) -> str:
+    """Формирует название имени файла изображения (M) для Good."""
+    return f'{GOOD_IMAGE_PATH}{instance.slug}_m'
+
+
+def set_good_image_s_name(instance, filename) -> str:
+    """Формирует название имени файла изображения (S) для Good."""
+    return f'{GOOD_IMAGE_PATH}{instance.slug}_s'
+
+
+def set_subcategory_image_name(instance, filename) -> str:
+    """Формирует название имени файла изображения для Subcategory."""
+    return f'{SUBCATEGORY_IMAGE_PATH}{instance.slug}'
 
 
 """Static files settings."""
