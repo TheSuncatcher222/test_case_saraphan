@@ -1,9 +1,10 @@
 import pytest
 
-from api.v1.tests.fixtures import (
+from api.v1.tests.conftest import (
     URL_MISSED_STATUSES,
     URL_AUTH_CREATE, URL_AUTH_REFRESH, URL_CATEGORIES, URL_CREATE_NUMS_ROW,
-    URL_SHOPPING_CART, URL_SUBCATEGORIES, URL_SWAGGER,
+    URL_GOODS, URL_SHOPPING_CART, URL_SHOPPING_CART_CLEAR, URL_SUBCATEGORIES,
+    URL_SWAGGER,
     client_auth,
 )
 
@@ -28,8 +29,14 @@ class TestEndpointsAvailability():
             (URL_CREATE_NUMS_ROW,
              'формирования списка цифр'
              ),
+            (URL_GOODS,
+             'получения списка товаров'
+             ),
             (URL_SHOPPING_CART,
              'взаимодействия с корзиной товаров'
+             ),
+            (URL_SHOPPING_CART_CLEAR,
+             'очистки корзины товаров'
              ),
             (URL_SUBCATEGORIES,
              'получения списка подкатегорий товаров'
