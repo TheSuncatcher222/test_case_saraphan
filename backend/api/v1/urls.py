@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from api.v1.views import (
     CategoryViewSet, CustomTokenObtainPairView, CustomTokenRefreshView,
     GoodViewSet, ShoppingCartViewSet, SubcategoryViewSet,
+    create_nums_row,
 )
 
 router = DefaultRouter()
@@ -30,5 +31,6 @@ for route in ROUTER_DATA:
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('create-nums-row/', create_nums_row),
     path('auth/token/', include(urlpatterns_token)),
 ]

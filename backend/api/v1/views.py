@@ -1,6 +1,6 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import status
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -15,10 +15,40 @@ from api.v1.schemas import (
 )
 from api.v1.serializers import (
     CategoryGetSerializer, GoodGetSerializer,
+    NumberSerializer,
     ShoppingCartGetSerializer, ShoppingCartPostListSerializer,
     SubcategoryGetSerializer,
 )
 from goods.models import Category, Good, ShoppingCart, Subcategory
+
+
+# INFO: выбран метод POST, так как он точно не будет закеширован
+#       ни на сервере, ни на клиенте.
+@api_view(http_method_names=('POST',))
+def create_nums_row(request):
+    """
+    Функция, которая выводит n первых элементов последовательности
+    122333444455555… (число повторяется столько раз, чему оно равно).
+    """
+    serializer = NumberSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    number: int = serializer.validated_data['number']
+    arith_progress: int = sum(i for i in range(number+1))
+    nums: list[int] = [None] * arith_progress
+    point: int = 0
+    for i in range(number+1):
+        j: int = 0
+        for j in range(i):
+            nums[point] = i
+            point += 1
+            j += 1
+    data: dict[str, str] = {
+        "number_sequence": ''.join(map(str, nums))
+    }
+    return Response(
+        status=status.HTTP_200_OK,
+        data=data,
+    )
 
 
 @extend_schema(**TOKEN_JWT_OBTAIN_SCHEMA)

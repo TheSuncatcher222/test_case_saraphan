@@ -1,9 +1,24 @@
 from rest_framework.serializers import (
-    CharField, IntegerField, ModelSerializer, ValidationError,
+    CharField, IntegerField, ModelSerializer, Serializer, ValidationError,
 )
 
 from goods.models import Category, Good, ShoppingCart, Subcategory
 
+
+class NumberSerializer(Serializer):
+    """Сериализатор проверки валидности данных для create_noms_row."""
+
+    number = IntegerField()
+
+    def validate_number(self, value):
+        """
+        Валидация для поля 'number'.
+        """
+        if value < 1:
+            raise ValidationError(
+                "Поле 'number' должно быть целым положительным числом."
+            )
+        return value
 
 class CategoryGetSerializer(ModelSerializer):
     """Сериализатор представления объектов Category."""
