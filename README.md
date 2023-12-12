@@ -51,7 +51,7 @@
 ➖ Загрузить проект
 
 ```
-git@github.com:TheSuncatcher222/test_case_saraphan.git
+git clone git@github.com:TheSuncatcher222/test_case_saraphan.git
 ```
 
 ➖ Перейти в папку backend
