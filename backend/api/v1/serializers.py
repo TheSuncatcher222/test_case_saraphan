@@ -20,6 +20,7 @@ class NumberSerializer(Serializer):
             )
         return value
 
+
 class CategoryGetSerializer(ModelSerializer):
     """Сериализатор представления объектов Category."""
 
