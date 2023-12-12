@@ -1,0 +1,38 @@
+version: '3.8'
+
+volumes:
+  database_cs:
+  static_cs:
+  media_cs:
+
+services:
+
+  saraphan_database:
+    image: postgres:15-alpine
+    volumes:
+      - database_cs:/var/lib/postgresql/data/
+    env_file:
+      - backend/.env
+
+  saraphan_backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    env_file: backend/.env
+    volumes:
+      - static_cs:/app/static
+      - media_cs:/app/media
+    depends_on:
+      - saraphan_database
+
+  saraphan_gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_cs:/var/html/static/
+      - media_cs:/var/html/media/
+    depends_on:
+      - saraphan_backend
