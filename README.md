@@ -89,6 +89,14 @@ docker-compose up --build
 http://localhost:8000/
 ```
 
+➖ Войти в Django Admin
+
+```
+http://localhost:8000/admin/
+# Имя пользователя: admin
+# Пароль: admin
+```
+
 ➖ Документация доступна на
 
 ```
